@@ -143,6 +143,8 @@ function App() {
     }
   }
 
+  // nova explicação
+
   // Para melhor compreensão, vou criar outra função!
   const acessarGoogle = () => {
     alert('Atenção, essa ação irá sair do Site.');
