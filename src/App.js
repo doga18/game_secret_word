@@ -35,6 +35,8 @@ function App() {
   const [guesses, setGuesses] = useState(5);
   const [score, setScore] = useState(0);
 
+  const [msg, setMsg] = useState("");
+
   const pickWordAndCategory = () => {
     // Pick a random category
     const categories_sellecetds = Object.keys(words);
@@ -101,8 +103,15 @@ function App() {
     // check if letter has already been utilized
 
     if(guessedLetters.includes(normalizedletter) || wrongLetters.includes(normalizedletter)){
-      alert('Você já tentou essa letra!')
+      setMsg("Você já usou essa letra, não foi descontado nenhuma das suas chances!")
       return;
+    }
+
+    // Veficando se o total das letras tentadas corretas equivalem ao total de letras ta palavra selecionada
+    console.log(`quantidade de letras ${letters.length}`);
+    console.log(`quantidade de letras corretass tentadas ${guessedLetters.length}`)
+    if(letters.length === guessedLetters.length +1){
+      setMsg("Parabéns você Ganhou!")
     }
   //   }else if(letters.includes(normalizedletter)){
   //     setGuessedLetters(normalizedletter)
@@ -121,11 +130,14 @@ function App() {
         ...actualGuessedLetters,
         normalizedletter
       ])
+      setMsg(`Você acertou a letra ${normalizedletter}!`)
     }else{
       setWrongLetters((actualWrongLetter) => [
         ...actualWrongLetter,
         normalizedletter
       ])
+      let normalizedletterM = normalizedletter.toUpperCase();
+      setMsg(`Que pena você errou ao tentar advinhar com a letra ${normalizedletterM}, você tem somente ${guesses} chances restantes!`);
       setGuesses(guesses - 1);
       console.log(guesses);
     }
@@ -153,7 +165,8 @@ function App() {
         guessedLetters={guessedLetters} 
         wrongLetters={wrongLetters} 
         guesses={guesses} 
-        score={score} />}
+        score={score}
+        msg={msg} />}
       {gameStage === "end" && <GameOver initGame={initGame} />}
     </div>
   );

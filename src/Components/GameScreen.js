@@ -11,7 +11,7 @@ import React, { useState, useRef } from 'react'
 // guesses={guesses} 
 // score={score} />}
 
-const GameScreen = ({gameOver, pickedWord, pickedCategory, letters, guessedLetters, wrongLetters, guesses, score, verifyLetter}) => {
+const GameScreen = ({gameOver, pickedWord, pickedCategory, letters, guessedLetters, wrongLetters, guesses, score, verifyLetter, msg}) => {
     // Criando um hook para alimentar a letra.
 
     const [letter, setLetter] = useState('');
@@ -36,6 +36,11 @@ const GameScreen = ({gameOver, pickedWord, pickedCategory, letters, guessedLette
         <p className="points">
             <span>Pontuação: {score}</span>
         </p>
+        <div className="msg_game">
+            <h2>
+                {msg}
+            </h2>
+        </div>
         <h1>
             Adivinha a Palavra
         </h1>
@@ -65,7 +70,14 @@ const GameScreen = ({gameOver, pickedWord, pickedCategory, letters, guessedLette
             <p>Tente advinha a letra da palavra</p>
             <p>Existem {guesses} tentativas restantes.</p>
             <form onSubmit={handleSubmit}>
-                <input type="text" name="letter" maxLength="1" required onChange={(e) => setLetter(e.target.value)} value={letter} ref={letterInputRef}/>
+                <input type="text" 
+                name="letter" 
+                maxLength="1" 
+                required 
+                onChange={(e) => setLetter(e.target.value)} 
+                value={letter} 
+                ref={letterInputRef} 
+                disabled={msg === "Parabéns você ganhou!" ? true : false }/>
                 <br />
                 <button>Tentar</button>
             </form>
