@@ -32,7 +32,7 @@ function App() {
   // Letras tentadas
   const [guessedLetters, setGuessedLetters] = useState("");
   const [wrongLetters, setWrongLetters] = useState([]);
-  const [guesses, setGuesses] = useState(5);
+  const [guesses, setGuesses] = useState(3);
   const [score, setScore] = useState(0);
 
   const [msg, setMsg] = useState("");
@@ -67,6 +67,9 @@ function App() {
   //Página inicial
   const initGame = () => {
     // Função para escolher a palavra e a categoria.
+    // Resetando as configurações de pontuação, tentativas.
+    setGuesses(3);
+    setScore(0);
     setGameStage(stages[0].name);
   }
   // Iniciando o jogo
@@ -138,12 +141,29 @@ function App() {
       ])
       let normalizedletterM = normalizedletter.toUpperCase();
       setMsg(`Que pena você errou ao tentar advinhar com a letra ${normalizedletterM}, você tem somente ${guesses} chances restantes!`);
-      setGuesses(guesses - 1);
+      // esse é o método que eu desenvolvi
+      //setGuesses(guesses - 1);
+      // Esse é o método que o professor desenvolveu.
+      setGuesses((actualGuesses) => actualGuesses - 1);
       console.log(guesses);
     }
   }
 
-  // nova explicação
+  const clearLetterStates = () => {
+    setGuessedLetters([]);
+    setWrongLetters([]);
+  }
+
+  // é um hook que monitora um dado
+  useEffect(() => {
+    if(guesses <= 0){
+      // reset all states
+      clearLetterStates();
+      // Game over
+      setGameStage(stages[2].game);
+    }
+
+  }, [guesses])
 
   // Para melhor compreensão, vou criar outra função!
   const acessarGoogle = () => {

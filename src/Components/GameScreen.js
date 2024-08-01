@@ -15,7 +15,7 @@ const GameScreen = ({gameOver, pickedWord, pickedCategory, letters, guessedLette
     // Criando um hook para alimentar a letra.
 
     const [letter, setLetter] = useState('');
-    const letterInputRef = useRef(null);
+    const letterInputRef = useRef('');
 
     // Tratando o envio do formulário
 
@@ -25,7 +25,7 @@ const GameScreen = ({gameOver, pickedWord, pickedCategory, letters, guessedLette
             gameOver();
             return;
         }
-        e.preventDefault();        
+        e.preventDefault();
         const letter_try = await verifyLetter(letter);
         
         letterInputRef.current.focus()
